@@ -4,9 +4,9 @@ spring:
     banner-mode: off
 
   datasource:
-    url: jdbc:mysql://localhost:3306/blog
-    username: blog_app
-    password: blog_app
+    url: jdbc:mysql://localhost:3306/${MYSQL_DATABASE}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
 
   jpa:
     hibernate:
