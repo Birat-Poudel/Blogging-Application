@@ -5,16 +5,21 @@ import com.biratpoudel.blog.dto.PostDto;
 import com.biratpoudel.blog.dto.PostRequest;
 import com.biratpoudel.blog.dto.PostResponse;
 import com.biratpoudel.blog.model.User;
+import com.biratpoudel.blog.service.FileService;
 import com.biratpoudel.blog.service.PostService;
 import com.biratpoudel.blog.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -23,10 +28,15 @@ public class PostController {
 
     private final PostService postService;
     private final UserService userService;
+    private final FileService fileService;
 
-    public PostController(PostService postService, UserService userService) {
+    @Value("${project.image}")
+    private String path;
+
+    public PostController(PostService postService, UserService userService, FileService fileService) {
         this.postService = postService;
         this.userService = userService;
+        this.fileService = fileService;
     }
 
     @GetMapping("/posts")
@@ -79,4 +89,16 @@ public class PostController {
     public ResponseEntity<List<PostDto>> searchByTitle(@RequestParam String query) {
         return ResponseEntity.ok(postService.search(query));
     }
+
+    // Download Image
+    @GetMapping(value = "/posts/images/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public void downloadImage(
+            @PathVariable String imageName,
+            HttpServletResponse response
+    ) throws IOException {
+        InputStream resource = fileService.getResource(path, imageName);
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        StreamUtils.copy(resource, response.getOutputStream());
+    }
+
 }
