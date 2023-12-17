@@ -15,7 +15,7 @@ MySQL includes two components:
 
 [Download Link of MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
 
-Create a database, and update the database information in dotenv file.
+Create a database, and update the database information in project's dotenv file.
 
 ```.dotenv
 MYSQL_DATABASE=
