@@ -34,6 +34,7 @@ Make sure that you have:
 ## Remaining Tasks
 
 - [x] Download Image
+- [x] Role Based Authorization
 - [ ] JSON Response Optimization
 - [ ] Documentation
 - [ ] Test Driven Development

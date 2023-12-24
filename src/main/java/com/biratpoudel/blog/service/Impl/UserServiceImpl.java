@@ -8,6 +8,7 @@ import com.biratpoudel.blog.dto.UserResponse;
 import com.biratpoudel.blog.dto.mapper.UserMapper;
 import com.biratpoudel.blog.dto.mapper.UserResponseMapper;
 import com.biratpoudel.blog.exception.ResourceNotFoundException;
+import com.biratpoudel.blog.model.Role;
 import com.biratpoudel.blog.model.User;
 import com.biratpoudel.blog.repository.UserRepository;
 import com.biratpoudel.blog.service.UserService;
@@ -19,7 +20,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -65,6 +68,11 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = userMapper.apply(userRequest);
+
+        Set<Role> role = new HashSet<>();
+        role.add(new Role("ROLE_USER"));
+        user.setRoles(role);
+
         userRepository.save(user);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());

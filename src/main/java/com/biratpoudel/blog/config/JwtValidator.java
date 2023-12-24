@@ -1,5 +1,6 @@
 package com.biratpoudel.blog.config;
 
+import com.biratpoudel.blog.model.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,12 +9,15 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class JwtValidator extends OncePerRequestFilter {
 
@@ -25,7 +29,7 @@ public class JwtValidator extends OncePerRequestFilter {
         if (jwt != null) {
             try{
                 String username = JwtProvider.getUsernameFromJwtToken(jwt);
-                List<GrantedAuthority> authorities = new ArrayList<>();
+                Set<GrantedAuthority> authorities = new HashSet<>();
                 Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }

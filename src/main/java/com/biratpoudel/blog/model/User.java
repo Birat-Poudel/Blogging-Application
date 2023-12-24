@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,6 +22,12 @@ public class User {
 
     @NotEmpty(message = "Password cannot be null or empty!")
     private String password;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+               joinColumns = @JoinColumn(name = "user", referencedColumnName = "userId"),
+               inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "roleId"))
+    private Set<Role> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts;
