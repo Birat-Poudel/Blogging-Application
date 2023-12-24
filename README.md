@@ -35,7 +35,7 @@ Make sure that you have:
 
 - [x] Download Image
 - [x] Role Based Authorization
-- [ ] JSON Response Optimization
+- [x] JSON Response Optimization
 - [ ] Documentation
 - [ ] Test Driven Development
 - [ ] Exception Handling Optimization

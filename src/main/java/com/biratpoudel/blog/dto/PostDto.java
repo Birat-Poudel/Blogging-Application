@@ -43,7 +43,7 @@ public record PostDto(
 //        @Valid
 //        @NotNull(message = "User cannot be null!")
 //        @JsonIgnore
-        UserResponse user,
+        PostUserResponse user,
 
 //        @Valid
 //        @JsonIgnore
