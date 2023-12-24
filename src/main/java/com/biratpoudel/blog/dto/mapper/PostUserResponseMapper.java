@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.function.Function;
 
 @Service
-public class UserPostResponseMapper implements Function<User, PostUserResponse> {
+public class PostUserResponseMapper implements Function<User, PostUserResponse> {
 
     @Override
     public PostUserResponse apply(User user) {

@@ -13,6 +13,13 @@ import java.util.HashMap;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ApiResponse> BadCredentialsExceptionHandler(BadCredentialsException ex) {
+        String message = ex.getMessage();
+        ApiResponse apiResponse = new ApiResponse(message, "401 Unauthorized");
+        return new ResponseEntity<>(apiResponse, HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponse> resourceNotFoundExceptionHandler(ResourceNotFoundException ex) {
         String message = ex.getMessage();

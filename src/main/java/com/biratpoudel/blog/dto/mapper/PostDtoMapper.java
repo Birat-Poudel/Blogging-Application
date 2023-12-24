@@ -9,10 +9,10 @@ import java.util.function.Function;
 @Service
 public class PostDtoMapper implements Function<Post, PostDto> {
 
-    private final UserPostResponseMapper userPostResponseMapper;
+    private final PostUserResponseMapper postUserResponseMapper;
 
-    public PostDtoMapper(UserPostResponseMapper userPostResponseMapper) {
-        this.userPostResponseMapper = userPostResponseMapper;
+    public PostDtoMapper(PostUserResponseMapper postUserResponseMapper) {
+        this.postUserResponseMapper = postUserResponseMapper;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class PostDtoMapper implements Function<Post, PostDto> {
                 post.getCreatedAt(),
                 post.getUpdatedAt(),
                 post.getSubImages(),
-                userPostResponseMapper.apply(post.getUser()),
+                postUserResponseMapper.apply(post.getUser()),
                 post.getComments()
         );
     }

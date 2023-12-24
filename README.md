@@ -38,7 +38,7 @@ Make sure that you have:
 - [x] JSON Response Optimization
 - [ ] Documentation
 - [ ] Test Driven Development
-- [ ] Exception Handling Optimization
+- [x] Exception Handling Optimization
 
 ## Contributions
 
