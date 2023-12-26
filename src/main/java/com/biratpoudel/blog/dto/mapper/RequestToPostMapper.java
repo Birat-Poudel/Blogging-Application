@@ -13,7 +13,8 @@ public class RequestToPostMapper implements Function<PostRequest, Post> {
     public Post apply(PostRequest postRequest) {
         return new Post(
                 postRequest.title(),
-                postRequest.description()
+                postRequest.description(),
+                postRequest.categories()
         );
     }
 }

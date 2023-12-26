@@ -38,6 +38,8 @@ Make sure that you have:
 - [x] JSON Response Optimization
 - [ ] Documentation
 - [ ] Test Driven Development
+- [x] Category in Post
+- [ ] Comment JSON Response
 - [x] Exception Handling Optimization
 
 ## Contributions

@@ -21,6 +21,7 @@ public class PostDtoMapper implements Function<Post, PostDto> {
                 post.getPostId(),
                 post.getTitle(),
                 post.getDescription(),
+                post.getCategories(),
                 post.getMainImage(),
                 post.getLikes(),
                 post.getDislikes(),

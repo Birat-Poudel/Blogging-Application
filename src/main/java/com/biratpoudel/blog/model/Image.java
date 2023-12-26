@@ -17,12 +17,13 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long imageId;
 
-    @NotEmpty(message = "Image URL cannot be empty!")
+    @NotEmpty(message = "Image URL cannot be empty or null!")
     private String imageUrl;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
     @JsonIgnore
+    @NotNull(message = "Post cannot be empty or null!")
     private Post post;
 
     public Image(String imageUrl, Post post) {
