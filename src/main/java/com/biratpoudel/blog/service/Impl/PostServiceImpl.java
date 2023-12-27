@@ -121,6 +121,9 @@ public class PostServiceImpl implements PostService {
                           PostRequest postRequest,
                           Long userId) {
 
+        userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "User Id", userId));
+
         Post oldPost = postRepository.findById(postId)
                                      .orElseThrow(() -> new ResourceNotFoundException("Post", "Post Id", postId));
 
@@ -164,6 +167,10 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public void deleteById(Long postId, Long userId) {
+
+        userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "User Id", userId));
+
         Post post = postRepository.findById(postId)
                                   .orElseThrow(() -> new ResourceNotFoundException("Post", "Post Id", postId));
 
@@ -181,4 +188,5 @@ public class PostServiceImpl implements PostService {
                              .map(postDtoMapper)
                              .collect(Collectors.toList());
     }
+
 }

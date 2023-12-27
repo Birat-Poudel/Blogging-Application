@@ -1,23 +1,20 @@
 package com.biratpoudel.blog.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.util.List;
-
 @Entity
 @Data
-public class Comment {
+public class Reply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long commentId;
+    private Long replyId;
 
     @Column(columnDefinition = "TEXT")
-    @NotNull(message = "Comment cannot be null or empty!")
-    private String comment;
+    @NotNull(message = "Reply text cannot be null or empty!")
+    private String replyText;
 
     @NotNull(message = "Likes cannot be null!")
     private Integer likes;
@@ -25,12 +22,14 @@ public class Comment {
     @NotNull(message = "DisLikes cannot be null!")
     private Integer dislikes;
 
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
-    private List<Reply> replies;
+    @ManyToOne
+    @JoinColumn(name = "comment_id")
+    @NotNull(message = "Comment cannot be null!")
+    private Comment comment;
 
     @ManyToOne
-    @JoinColumn(name = "post_id")
-    private Post post;
+    @JoinColumn(name = "parent_reply_id")
+    private Reply parentReply;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")

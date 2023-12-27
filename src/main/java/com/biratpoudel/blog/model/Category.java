@@ -13,6 +13,7 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_id")
     private Long categoryId;
 
     @NotNull(message = "Category Title cannot be null or empty!")
@@ -23,6 +24,6 @@ public class Category {
     @Column(columnDefinition = "TEXT")
     private String categoryDescription;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "categories")
     private List<Post> posts;
 }

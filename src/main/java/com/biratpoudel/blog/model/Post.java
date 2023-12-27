@@ -27,9 +27,13 @@ public class Post {
     @NotEmpty(message = "Description cannot be null or empty!")
     private String description;
 
-    @OneToMany
-    @JoinColumn(name = "category_id")
     //@Valid
+    @ManyToMany
+    @JoinTable(
+            name = "post_category",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
     private List<Category> categories;
 
     //@NotEmpty(message = "Main Image cannot be null or empty!")
@@ -52,7 +56,7 @@ public class Post {
     //@Valid
     private List<Image> subImages;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     @JsonIgnore
     //@NotNull(message = "User cannot be null!")

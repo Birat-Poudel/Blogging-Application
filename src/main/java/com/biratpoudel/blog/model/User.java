@@ -53,6 +53,10 @@ public class User {
     //@Valid
     private List<Comment> comments;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    //@Valid
+    private List<Reply> replies;
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;

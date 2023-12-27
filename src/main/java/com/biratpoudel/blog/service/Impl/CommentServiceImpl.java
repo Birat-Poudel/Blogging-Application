@@ -4,8 +4,10 @@ import com.biratpoudel.blog.dto.Votes;
 import com.biratpoudel.blog.exception.ResourceNotFoundException;
 import com.biratpoudel.blog.model.Comment;
 import com.biratpoudel.blog.model.Post;
+import com.biratpoudel.blog.model.User;
 import com.biratpoudel.blog.repository.CommentRepository;
 import com.biratpoudel.blog.repository.PostRepository;
+import com.biratpoudel.blog.repository.UserRepository;
 import com.biratpoudel.blog.service.CommentService;
 import org.springframework.stereotype.Service;
 
@@ -14,24 +16,35 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
-    public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository) {
+
+    public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository, UserRepository userRepository) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public Comment save(Long postId, Comment comment) {
+    public Comment save(Long postId, Comment comment, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "User Id", userId));
+
         Post post = postRepository
                 .findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "Post Id", postId));
         post.getComments().add(comment);
+
+        user.getComments().add(comment);
         postRepository.save(post);
         return comment;
     }
 
     @Override
-    public Comment update(Long postId, Long commentId, Comment comment) {
+    public Comment update(Long postId, Long commentId, Comment comment, Long userId) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "User Id", userId));
+
         Post post = postRepository
                 .findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "Post Id", postId));
@@ -49,7 +62,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment updateVotes(Long postId, Long commentId, Votes votes) {
+    public Comment updateVotes(Long postId, Long commentId, Votes votes, Long userId) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "User Id", userId));
+
         Post post = postRepository
                 .findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "Post Id", postId));
@@ -74,7 +90,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void delete(Long postId, Long commentId) {
+    public void delete(Long postId, Long commentId, Long userId) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "User Id", userId));
+
         Post post = postRepository
                 .findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "Post Id", postId));
@@ -87,7 +106,6 @@ public class CommentServiceImpl implements CommentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Comment", "Comment Id", commentId));
 
         commentRepository.deleteById(commentToDelete.getCommentId());
-        post.getComments().remove(commentToDelete);
         postRepository.save(post);
     }
 
