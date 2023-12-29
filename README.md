@@ -1,4 +1,8 @@
-# Blogging Application Backend REST API
+# Building a Robust Blogging Application Backend: A REST API
+
+- Established robust authentication using JSON Web Tokens and Implemented role-based authorization within the Spring Security framework.
+- Developed comprehensive CRUD operations for blog posts, seamlessly integrated comment and nested replies within comments, and enabled support for multiple post images.
+- Implemented exception handling mechanisms to ensure application resilience and provide informative error messages to users.
 
 ## 🚀 Getting started
 

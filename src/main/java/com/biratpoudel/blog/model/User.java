@@ -15,6 +15,10 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
+@Table(uniqueConstraints = {
+        @UniqueConstraint(name = "user_username_unique", columnNames = "username"),
+        @UniqueConstraint(name = "user_email_unique", columnNames = "email")
+})
 public class User {
 
     @Id
